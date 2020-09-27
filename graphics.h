@@ -1,8 +1,10 @@
+#pragma once
+
 #include <stdint.h>
 
-uint32_t xres;
-uint32_t yres;
-uint32_t cell_size;
+extern uint32_t xres;
+extern uint32_t yres;
+extern uint32_t cell_size;
 
 void setup_graphics();
 void put_pixel(uint32_t x, uint32_t y, uint32_t color);
