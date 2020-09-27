@@ -11,13 +11,7 @@ enum BUTTON {
     NUM_BUTTONS
 };
 
-const int SDL_SCANCODES[NUM_BUTTONS] = {
-    SDL_SCANCODE_K,
-    SDL_SCANCODE_J,
-    SDL_SCANCODE_A,
-    SDL_SCANCODE_D,
-    SDL_SCANCODE_S
-};
+extern const int SDL_SCANCODES[NUM_BUTTONS];
 
 extern const int SDL_BUTTONS[NUM_BUTTONS];
 
