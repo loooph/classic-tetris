@@ -9,6 +9,10 @@
 
 #include "constants.h"
 
+uint32_t xres;
+uint32_t yres;
+uint32_t cell_size;
+
 uint32_t *frame_buffer;
 
 uint8_t vinfo_struct[160];

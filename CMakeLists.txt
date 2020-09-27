@@ -5,5 +5,10 @@ project(classic_tetris
     DESCRIPTION "NES tetris rewrite in C++"
     LANGUAGES C CXX)
 
-add_executable(tetris main.c)
+add_executable(tetris
+    main.c
+    constants.c
+    game.c
+    graphics.c
+    input.c)
 target_link_libraries(tetris SDL2)

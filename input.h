@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SDL2/SDL.h>
 
 enum BUTTON {
@@ -9,15 +11,7 @@ enum BUTTON {
     NUM_BUTTONS
 };
 
-const int SDL_BUTTONS[NUM_BUTTONS] = {
-    SDL_CONTROLLER_BUTTON_A,
-    SDL_CONTROLLER_BUTTON_B,
-    SDL_CONTROLLER_BUTTON_DPAD_LEFT,
-    SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
-    SDL_CONTROLLER_BUTTON_DPAD_DOWN
-};
-
-SDL_GameController* controller = NULL;
+extern const int SDL_BUTTONS[NUM_BUTTONS];
 
 int get_rising_edge(int *last_inputs, enum BUTTON button);
 void setup_inputs();
