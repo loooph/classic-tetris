@@ -1,9 +1,9 @@
 #include "input.h"
 
-int get_rising_edge(int *last_inputs, enum BUTTON button)
+int get_rising_edge(int *last_inputs, enum BUTTON button, const uint8_t *keyboard_inputs)
 {
     int last_val = last_inputs[button];
-    last_inputs[button] = SDL_GameControllerGetButton(controller, SDL_BUTTONS[button]);
+    last_inputs[button] = SDL_GameControllerGetButton(controller, SDL_BUTTONS[button]) || keyboard_inputs[SDL_SCANCODES[button]];
     if (last_val) {
         return 0;
     } else {
@@ -13,7 +13,7 @@ int get_rising_edge(int *last_inputs, enum BUTTON button)
 
 void setup_inputs()
 {
-    SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_NOPARACHUTE);
+    SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_EVENTS);
     for (int i = 0; i < SDL_NumJoysticks(); ++i) {
         if (SDL_IsGameController(i)) {
             controller = SDL_GameControllerOpen(i);
@@ -25,16 +25,15 @@ void setup_inputs()
             }
         }
     }
-    //printf("%d\n", SDL_NumJoysticks());
 }
 
-void update_das(int *inputs)
+void update_das(int *inputs, const uint8_t *keyboard_inputs)
 {
     static int das_counter = 0;
     static int das_frame = 0;
     enum BUTTON button = 0;
     for (enum BUTTON b = BUTTON_LEFT; b <= BUTTON_DOWN; ++b) {
-        if (SDL_GameControllerGetButton(controller, SDL_BUTTONS[b])) {
+        if (SDL_GameControllerGetButton(controller, SDL_BUTTONS[b]) || keyboard_inputs[SDL_SCANCODES[b]]) {
             button = b;
             break;
         }
@@ -58,8 +57,9 @@ void update_das(int *inputs)
 void get_inputs(int *last_inputs, int *inputs)
 {
     SDL_GameControllerUpdate();
+    const uint8_t *keyboard_inputs = SDL_GetKeyboardState(NULL);
     for (int i = 0; i < NUM_BUTTONS; ++i) {
-        inputs[i] = get_rising_edge(last_inputs, i);
+        inputs[i] = get_rising_edge(last_inputs, i, keyboard_inputs);
     }
-    update_das(inputs);
+    update_das(inputs, keyboard_inputs);
 }
